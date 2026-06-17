@@ -1,16 +1,21 @@
 import yfinance as yf
 import pandas as pd
+import numpy as np
 
-# 6 highly correlated assets — tech sector
-TICKERS = ["AAPL", "MSFT", "GOOGL", "AMZN", "META", "NVDA"]
 
-def fetch_prices(start="2020-01-01", end="2024-01-01"):
+TICKERS = ["XLE", "XLF", "XLV", "XLI", "XLK", "XLU"]
+
+def fetch_prices(start="2010-01-01", end="2020-01-01"):
     print("Fetching price data...")
     raw = yf.download(TICKERS, start=start, end=end)["Close"]
     prices = raw.dropna()
-    print(f"Got {len(prices)} trading days across {len(TICKERS)} assets")
-    print(prices.tail())
-    return prices
+    
+    
+    log_prices = np.log(prices)
+    
+    print(f"Got {len(log_prices)} trading days across {len(TICKERS)} assets")
+    print(log_prices.tail())
+    return log_prices
 
 if __name__ == "__main__":
     df = fetch_prices()
