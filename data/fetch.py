@@ -2,18 +2,14 @@ import yfinance as yf
 import pandas as pd
 import numpy as np
 
-
-TICKERS = ["XLE", "XLF", "XLV", "XLI", "XLK", "XLU"]
+TICKERS = ["GLD", "SLV", "GDX", "GDXJ", "IAU", "SGOL"]
 
 def fetch_prices(start="2010-01-01", end="2020-01-01"):
     print("Fetching price data...")
     raw = yf.download(TICKERS, start=start, end=end)["Close"]
     prices = raw.dropna()
-    
-    
     log_prices = np.log(prices)
-    
-    print(f"Got {len(log_prices)} trading days across {len(TICKERS)} assets")
+    print(f"Got {len(log_prices)} days of data")
     print(log_prices.tail())
     return log_prices
 
